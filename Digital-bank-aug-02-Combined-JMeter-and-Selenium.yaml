@@ -6,19 +6,18 @@ modules:
     ignore-unknown-actions: true
 
 execution:
-- executor: selenium
-  scenario: Digital-bank-aug-02-Selenium
-  blazegrid: true
-  
-  capabilities: 
-    browserName: chrome
-  hold-for: 20m
+# - executor: selenium
+#   scenario: Digital-bank-aug-02-Selenium
+#   blazegrid: true  
+#   capabilities: 
+#     browserName: chrome
+#   hold-for: 20m
 
 - executor: jmeter
   scenario: Digital-bank-aug-02-Http
-  concurrency: 20
-  ramp-up: 1m
-  hold-for: 19m
+  concurrency: 2
+  ramp-up: 0s
+  hold-for: 20s
 
 scenarios:
   Digital-bank-aug-02-Selenium:
