@@ -46,8 +46,6 @@ scenarios:
               - url: 'http://localhost:8888/bank/account/deposit'
                 method: GET
                 label: 'http://localhost:8888/bank/account/deposit'
-                think-time: 16377ms
-                headers: {}
                 assert: 
                   - assume-success: false
                     contains:
@@ -55,6 +53,8 @@ scenarios:
                     not: false
                     regexp: false
                     subject: body
+                think-time: 16377ms
+                headers: {}
               - url: 'http://localhost:8888/bank/account/deposit'
                 method: POST
                 label: 'http://localhost:8888/bank/account/deposit'
