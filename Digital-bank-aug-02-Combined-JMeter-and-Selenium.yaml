@@ -48,6 +48,13 @@ scenarios:
                 label: 'http://localhost:8888/bank/account/deposit'
                 think-time: 16377ms
                 headers: {}
+                assert: 
+                  - assume-success: false
+                    contains:
+                      - 'Hubba hubba'
+                    not: false
+                    regexp: false
+                    subject: body
               - url: 'http://localhost:8888/bank/account/deposit'
                 method: POST
                 label: 'http://localhost:8888/bank/account/deposit'
