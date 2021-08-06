@@ -23,12 +23,12 @@ scenarios:
       User-Agent: 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/92.0.4515.107 Safari/537.36'
       Accept: 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9'
     requests:
-      - transaction: Test
+      - transaction: Login and view checking
         force-parent-sample: false
         do:
           - url: 'http://localhost:8888/bank/login'
             method: POST
-            label: 'http://localhost:8888/bank/login'
+            label: 'Login happening here'
             think-time: 0ms
             headers:
               Content-Type: application/x-www-form-urlencoded
@@ -37,33 +37,36 @@ scenarios:
               username: jsmith@demo.io
           - url: 'http://localhost:8888/bank/account/checking-view'
             method: GET
-            label: 'http://localhost:8888/bank/account/checking-view'
+            label: 'Checking view happens here'
             think-time: 47214ms
             headers: {}
-          - transaction: Make deposit
-            force-parent-sample: false
-            do:
-              - url: 'http://localhost:8888/bank/account/deposit'
-                method: GET
-                label: 'http://localhost:8888/bank/account/deposit'
-                assert:
-                  - assume-success: false
-                    contains:
-                      - "Hubba hubba"
-                    not: false
-                    regexp: false
-                    subject: body
-                think-time: 16377ms
-                headers: {}
-              - url: 'http://localhost:8888/bank/account/deposit'
-                method: POST
-                label: 'http://localhost:8888/bank/account/deposit'
-                think-time: 11468ms
-                headers:
-                  Content-Type: application/x-www-form-urlencoded
-                body:
-                  amount: '5.00'
-                  id: '131'
+      - transaction: Make deposit
+        force-parent-sample: false
+        do:
+          - url: 'http://localhost:8888/bank/account/deposit'
+            method: GET
+            label: 'http://localhost:8888/bank/account/deposit'
+            assert:
+              - assume-success: false
+                contains:
+                  - "Hubba hubba"
+                not: false
+                regexp: false
+                subject: body
+            think-time: 16377ms
+            headers: {}
+          - url: 'http://localhost:8888/bank/account/deposit'
+            method: POST
+            label: 'http://localhost:8888/bank/account/deposit'
+            think-time: 11468ms
+            headers:
+              Content-Type: application/x-www-form-urlencoded
+            body:
+              amount: '5.00'
+              id: '131'
+      - transaction: Logout
+        force-parent-sample: false
+        do:
           - url: 'http://localhost:8888/bank/logout'
             method: GET
             label: 'http://localhost:8888/bank/logout'
