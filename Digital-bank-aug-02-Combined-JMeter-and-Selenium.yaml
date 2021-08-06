@@ -46,10 +46,10 @@ scenarios:
               - url: 'http://localhost:8888/bank/account/deposit'
                 method: GET
                 label: 'http://localhost:8888/bank/account/deposit'
-                assert: 
+                assert:
                   - assume-success: false
                     contains:
-                      - 'Hubba hubba'
+                      - "Hubba hubba"
                     not: false
                     regexp: false
                     subject: body
