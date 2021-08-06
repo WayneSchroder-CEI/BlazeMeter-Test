@@ -6,12 +6,6 @@ modules:
     ignore-unknown-actions: true
 
 execution:
-# - executor: selenium
-#   scenario: Digital-bank-aug-02-Selenium
-#   blazegrid: true  
-#   capabilities: 
-#     browserName: chrome
-#   hold-for: 20m
 
 - executor: jmeter
   scenario: Digital-bank-aug-02-Http
@@ -20,29 +14,6 @@ execution:
   hold-for: 20s
 
 scenarios:
-  Digital-bank-aug-02-Selenium:
-    generate-flow-markers: true 
-    headless: false
-    timeout: 60s
-    think-time: 0s
-    requests:
-    - label: Test
-      actions:
-      - resizeWindow(1536,681)
-      - go(http://localhost:8888/bank/login?logout)
-      - clickByID(username)
-      - clickByID(password)
-      - clickByID(submit)
-      - clickByID(checking-menu)
-      - clickByID(view-checking-menu-item)
-      - clickByID(deposit-menu-item)
-      - clickByID(selectedAccount)
-      - selectByID(selectedAccount): "Joint Checking (Standard Checking)"
-      - clickByID(amount)
-      - typeByID(amount): "5.00"
-      - clickByCSS(button.btn.btn-primary.btn-sm)
-      - clickByCSS(img.user-avatar.rounded-circle)
-      - clickByLinkText(Logout)
 
   Digital-bank-aug-02-Http:
     headers:
@@ -69,20 +40,23 @@ scenarios:
             label: 'http://localhost:8888/bank/account/checking-view'
             think-time: 47214ms
             headers: {}
-          - url: 'http://localhost:8888/bank/account/deposit'
-            method: GET
-            label: 'http://localhost:8888/bank/account/deposit'
-            think-time: 16377ms
-            headers: {}
-          - url: 'http://localhost:8888/bank/account/deposit'
-            method: POST
-            label: 'http://localhost:8888/bank/account/deposit'
-            think-time: 11468ms
-            headers:
-              Content-Type: application/x-www-form-urlencoded
-            body:
-              amount: '5.00'
-              id: '131'
+          - transaction: Make deposit
+            force-parent-sample: false
+            do:
+              - url: 'http://localhost:8888/bank/account/deposit'
+                method: GET
+                label: 'http://localhost:8888/bank/account/deposit'
+                think-time: 16377ms
+                headers: {}
+              - url: 'http://localhost:8888/bank/account/deposit'
+                method: POST
+                label: 'http://localhost:8888/bank/account/deposit'
+                think-time: 11468ms
+                headers:
+                  Content-Type: application/x-www-form-urlencoded
+                body:
+                  amount: '5.00'
+                  id: '131'
           - url: 'http://localhost:8888/bank/logout'
             method: GET
             label: 'http://localhost:8888/bank/logout'
